@@ -11,6 +11,9 @@ const { productosApiRouter } = require('./api/productos.js');
 const { mensajesApiRouter } = require('./api/mensajes.js');
 const { userApiRouter } = require('./api/users.js');
 
+const { userRouter } = require('./routes/userRoutes.js');
+const { messageRouter } = require('./routes/messageRouter.js');
+
 //const { productSocket } = require('./webSocket/productosWS.js');
 const { messageSocket } = require('./webSocket/mensajesWS.js');
 
@@ -54,6 +57,9 @@ app.use(expressSession({
 app.use(productosApiRouter);
 app.use(mensajesApiRouter);
 app.use(userApiRouter);
+
+app.use(userRouter);
+app.use(messageRouter);
 
 
 app.get('/registro', (req, res) => {
