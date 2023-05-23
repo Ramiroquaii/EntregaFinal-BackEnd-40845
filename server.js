@@ -1,4 +1,4 @@
-const { serverPort, serverMode, sessionSecret } = require('./environment.js');
+const { serverPort, sessionSecret } = require('./environment.js');
 const { loggerDefault } = require('./logs/log4js.js');
 const path = require('path');  // Para el uso de rutas filePaths absolutos.
 
@@ -13,6 +13,7 @@ const { userApiRouter } = require('./api/users.js');
 
 const { userRouter } = require('./routes/userRoutes.js');
 const { messageRouter } = require('./routes/messageRouter.js');
+const { productRouter } = require('./routes/productRouter.js');
 
 //const { productSocket } = require('./webSocket/productosWS.js');
 const { messageSocket } = require('./webSocket/mensajesWS.js');
@@ -60,6 +61,7 @@ app.use(userApiRouter);
 
 app.use(userRouter);
 app.use(messageRouter);
+app.use(productRouter);
 
 
 app.get('/registro', (req, res) => {

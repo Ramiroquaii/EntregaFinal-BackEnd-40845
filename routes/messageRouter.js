@@ -1,7 +1,7 @@
 const Router = require('express');
 const { getMessages, getMessagesByAutor, saveMessage } = require('../controller/mesageController.js');
 
-const messageRouter = new Router()
+const messageRouter = new Router();
 
 messageRouter.get('/apii/mensajes', async (req, res) => {
 

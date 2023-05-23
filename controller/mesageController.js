@@ -13,12 +13,40 @@ function getTime() {
 
 async function getMessages(){
     const messages = await searchMessages();
-    console.log(messages);
+    let datosActualizados;
+
+    if (messages.length !== 0) {
+        datosActualizados = messages.map(objeto => {
+            const nuevoObjeto = { ...objeto };
+            nuevoObjeto._id = objeto._id.toString(); // Convertir ObjectId a string
+            return nuevoObjeto;
+        });
+        return datosActualizados;
+    }
+    if (messages === -1) {
+        return -1;
+    } else {
+        return [];
+    }
 }
 
 async function getMessagesByAutor(autor){
     const messages = await searchAuthorMessages(autor);
-    console.log(messages);
+    let datosActualizados;
+
+    if (messages.length !== 0) {
+        datosActualizados = messages.map(objeto => {
+            const nuevoObjeto = { ...objeto };
+            nuevoObjeto._id = objeto._id.toString(); // Convertir ObjectId a string
+            return nuevoObjeto;
+        });
+        return datosActualizados;
+    }
+    if (messages === -1) {
+        return -1;
+    } else {
+        return [];
+    }
 }
 
 async function saveMessage(message){
@@ -26,7 +54,13 @@ async function saveMessage(message){
     const newMsg = { timestamp: now, ...message };
 
     const messages = await insertMessage(newMsg);
-    console.log(messages);
+
+    if(messages.acknowledged){
+        let id = messages.insertedId.toString();
+        return { _id: id, ...newMsg };
+    } else {
+        return -1;
+    }
 }
 
 module.exports = { getMessages, getMessagesByAutor, saveMessage };
