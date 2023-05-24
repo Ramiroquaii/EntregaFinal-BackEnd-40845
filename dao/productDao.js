@@ -1,19 +1,19 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const { urlAtlas, mongoDBase } = require('../environment.js');
 
-function connectAtlas(){
+function connectAtlas() {
     const client = new MongoClient(
         urlAtlas,
         {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        serverApi: ServerApiVersion.v1
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            serverApi: ServerApiVersion.v1
         }
     );
     return client;
 }
 
-async function searchProducts(){
+async function searchProducts() {
     const client = connectAtlas();
     const databaseAtlas = client.db(mongoDBase);
     const collectionProductos = databaseAtlas.collection("productos");
@@ -23,7 +23,7 @@ async function searchProducts(){
             sort: { name: 1 }, // sort returned documents in ascending order by name (A->Z).
             projection: { _id: 1, name: 1, price: 1, photo: 1 }, // Include only fields in document.
         };
-        const documents = await collectionProductos.find({},options).toArray(); //Si no hay resultados find retornara un arreglo vacio [].
+        const documents = await collectionProductos.find({}, options).toArray(); //Si no hay resultados find retornara un arreglo vacio [].
         return documents;
     } catch (error) {
         console.log(error);
@@ -33,15 +33,15 @@ async function searchProducts(){
     }
 }
 
-async function searchProductById(id){
+async function searchProductById(id) {
     const client = connectAtlas();
     const databaseAtlas = client.db(mongoDBase);
     const collectionProductos = databaseAtlas.collection("productos");
 
     try {
-        const query = { _id: id };
+        const query = { _id: new ObjectId(id) };
         const result = await collectionProductos.findOne(query);
-        if(result != null){
+        if (result != null) {
             return result;
         } else {
             return -1;
@@ -51,7 +51,7 @@ async function searchProductById(id){
     }
 }
 
-async function insertProduct(newProduct){
+async function insertProduct(newProduct) {
     const client = connectAtlas();
     const databaseAtlas = client.db(mongoDBase);
     const collectionProductos = databaseAtlas.collection("productos");
@@ -67,4 +67,20 @@ async function insertProduct(newProduct){
     }
 }
 
-module.exports = { searchProducts, insertProduct, searchProductById };
+async function deleteProduct(id) {
+    const client = connectAtlas();
+    const databaseAtlas = client.db(mongoDBase);
+    const collectionProductos = databaseAtlas.collection("productos");
+
+    try {
+        const resultado = await collectionProductos.deleteOne({ _id: new ObjectId(id) }); // acknowledged:booleano y deletedCount:integer
+        return resultado;
+    } catch (error) {
+        console.error('Error al eliminar el producto:', error);
+        return -1;
+    } finally {
+        await client.close();
+    }
+}
+
+module.exports = { searchProducts, insertProduct, searchProductById, deleteProduct };

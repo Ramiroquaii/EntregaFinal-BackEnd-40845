@@ -1,5 +1,5 @@
 const Router = require('express');
-const { getProducts, getProductsById, saveProduct } = require('../controller/productController.js');
+const { getProducts, getProductsById, saveProduct, eliminarProduct } = require('../controller/productController.js');
 
 const productRouter = new Router();
 
@@ -30,6 +30,14 @@ productRouter.post('/apii/productos', async (req, res) => {
     const addedProduct = await saveProduct(newProduct);
 
     res.json(addedProduct);
+});
+
+productRouter.delete('/apii/productos/:id', async (req, res) => {
+    const { id } = req.params;
+
+    const eliminado = await eliminarProduct(id);
+
+    res.json(eliminado);
 });
 
 module.exports = { productRouter };

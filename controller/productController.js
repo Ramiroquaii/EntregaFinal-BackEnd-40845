@@ -1,4 +1,4 @@
-const { searchProducts, insertProduct, searchProductById } = require('../dao/productDao.js');
+const { searchProducts, insertProduct, searchProductById, deleteProduct } = require('../dao/productDao.js');
 
 async function getProducts(){
     const products = await searchProducts();
@@ -20,11 +20,34 @@ async function getProducts(){
 }
 
 async function getProductsById(id){
-    
+    const product = await searchProductById(id);
+
+    if(product != null){
+        return product;
+    } else {
+        return -1;
+    }
 }
 
 async function saveProduct(newProduct){
-    
+    const addedProduct = await insertProduct(newProduct);
+
+    if(addedProduct.acknowledged){
+        let id = addedProduct.insertedId.toString();
+        return { _id: id, ...newProduct };
+    } else {
+        return -1;
+    }
 }
 
-module.exports = { getProducts, getProductsById, saveProduct };
+async function eliminarProduct(id){
+    const deletedProduct = await deleteProduct(id);
+
+    if(deletedProduct.acknowledged){
+        return { deleted: id };
+    } else {
+        return -1;
+    }
+}
+
+module.exports = { getProducts, getProductsById, saveProduct, eliminarProduct };
