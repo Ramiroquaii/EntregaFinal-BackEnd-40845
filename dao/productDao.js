@@ -83,4 +83,24 @@ async function deleteProduct(id) {
     }
 }
 
-module.exports = { searchProducts, insertProduct, searchProductById, deleteProduct };
+async function updateProduct(id, updatedFields) {
+    const client = connectAtlas();
+    const databaseAtlas = client.db(mongoDBase);
+    const collectionProductos = databaseAtlas.collection("productos");
+
+    try {
+        const filter = { _id: new ObjectId(id) };
+        const updateDocument = {};
+        for (const field in updatedFields) {
+            updateDocument[field] = updatedFields[field];
+        }
+        const result = await collectionProductos.updateOne(filter, { $set: updateDocument }); //acknowledged:booleano y modifiedCount:int
+        return result;
+    } catch (error) {
+        console.log('Error en la actualización:', error);
+    } finally {
+        await client.close();
+    }
+}
+
+module.exports = { searchProducts, insertProduct, searchProductById, deleteProduct, updateProduct };

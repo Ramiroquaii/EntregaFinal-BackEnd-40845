@@ -1,4 +1,4 @@
-const { searchProducts, insertProduct, searchProductById, deleteProduct } = require('../dao/productDao.js');
+const { searchProducts, insertProduct, searchProductById, deleteProduct, updateProduct } = require('../dao/productDao.js');
 
 async function getProducts(){
     const products = await searchProducts();
@@ -50,4 +50,14 @@ async function eliminarProduct(id){
     }
 }
 
-module.exports = { getProducts, getProductsById, saveProduct, eliminarProduct };
+async function actualizarProduct(id, updateValues){
+    const updatedProduct = await updateProduct(id, updateValues);
+
+    if(updatedProduct.acknowledged && updatedProduct.modifiedCount == 1){
+        return { estado: 0, actualizado: { _id: id, ... updateValues } };
+    } else {
+        return -1;
+    }
+}
+
+module.exports = { getProducts, getProductsById, saveProduct, eliminarProduct, actualizarProduct };

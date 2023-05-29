@@ -1,43 +1,48 @@
 const Router = require('express');
-const { getProducts, getProductsById, saveProduct, eliminarProduct } = require('../controller/productController.js');
+const { getProducts, getProductsById, saveProduct, eliminarProduct, actualizarProduct } = require('../controller/productController.js');
 
 const productRouter = new Router();
 
-productRouter.get('/apii/productos', async (req, res) => {
-
+productRouter.get('/api/productos', async (req, res) => {
     const productos = await getProducts();
-
     res.json(productos);
 });
 
-productRouter.get('/apii/productos/:id', async (req, res) => {
+productRouter.get('/api/productos/:id', async (req, res) => {
     const { id } = req.params;
-
     const producto = await getProductsById(id);
-
     res.json(producto);
 });
 
-productRouter.post('/apii/productos', async (req, res) => {
-    const newProduct ={
-        name : req.body.nombre,
-        description : req.body.descripcion,
-        photo : req.body.foto,
-        price : req.body.precio,
-        stock : req.body.cantidad
+productRouter.post('/api/productos', async (req, res) => {
+    const parametros = req.body;
+    const parametrosExistente = {};
+    for (const parametro in parametros) {
+        if (parametros.hasOwnProperty(parametro)) {
+            parametrosExistente[parametro] = parametros[parametro];
+        }
     }
-
-    const addedProduct = await saveProduct(newProduct);
-
+    const addedProduct = await saveProduct(parametrosExistente);
     res.json(addedProduct);
 });
 
-productRouter.delete('/apii/productos/:id', async (req, res) => {
+productRouter.delete('/api/productos/:id', async (req, res) => {
     const { id } = req.params;
-
     const eliminado = await eliminarProduct(id);
-
     res.json(eliminado);
+});
+
+productRouter.put('/api/productos/:id', async (req, res) => {
+    const { id } = req.params;
+    const parametros = req.body;
+    const parametrosExistente = {};
+    for (const parametro in parametros) {
+        if (parametros.hasOwnProperty(parametro)) {
+            parametrosExistente[parametro] = parametros[parametro];
+        }
+    }
+    const updated = await actualizarProduct(id, parametrosExistente);
+    res.json(updated);
 });
 
 module.exports = { productRouter };

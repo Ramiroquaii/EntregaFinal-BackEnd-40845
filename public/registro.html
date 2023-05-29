@@ -11,41 +11,40 @@
 </head>
 
 <body>
+    <div id="mainHTML">
+        <div class="container mt-3">
+            <div class="jumbotron">
+                <h1>Registro de Nuevo Usuario</h1>
+                <br>
+                <form>
+                    <div class="form-group">
+                        <label for="user">Ingrese su Nombre :</label>
+                        <input id="user" class="form-control" type="text" name="user" required>
 
-<div id="mainHTML">
-    <div class="container mt-3">
-        <div class="jumbotron">
-            <h1>Registro de Nuevo Usuario</h1>
-            <br>
-            <form>
-                <div class="form-group">
-                    <label for="user">Ingrese su Nombre :</label>
-                    <input id="user" class="form-control" type="text" name="user" required>
+                        <label for="pass">Contraseña :</label>
+                        <input id="pass" class="form-control" type="password" name="pass" required>
 
-                    <label for="pass">Contraseña :</label>
-                    <input id="pass" class="form-control" type="password" name="pass" required>
+                        <label for="passConfirm">Contraseña Nuevamente :</label>
+                        <input id="passConfirm" class="form-control" type="password" name="passConfirm" required>
 
-                    <label for="passConfirm">Contraseña Nuevamente :</label>
-                    <input id="passConfirm" class="form-control" type="password" name="passConfirm" required>
+                        <label for="age">Edad :</label>
+                        <input id="age" class="form-control" type="text" name="age" required>
 
-                    <label for="age">Edad :</label>
-                    <input id="age" class="form-control" type="text" name="age" required>
+                        <label for="mail">Email :</label>
+                        <input id="mail" class="form-control" type="text" name="mail" required>
 
-                    <label for="mail">Email :</label>
-                    <input id="mail" class="form-control" type="text" name="mail" required>
+                        <label for="phone-number">Telefono :</label>
+                        <input id="phone-number" class="form-control" type="text" placeholder="+ Cod. Pais - Cod. Àrea - Numero - Telefono / +54-011-1234-4567" name="phone-number" required>
 
-                    <label for="phone-number">Telefono :</label>
-                    <input id="phone-number" class="form-control" type="text" placeholder="+ Cod. Pais - Cod. Àrea - Numero - Telefono / +54-011-1234-4567" name="phone-number" required>
-
-                    <button class="btn btn-success mt-3" id="btn-registrar" type="submit">Registrarse</button>
-                </div>
-            </form>
+                        <button class="btn btn-success mt-3" id="btn-registrar" type="submit">Registrarse</button>
+                        <br><br>
+                        <a href="/">Volver al Inicio</a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
-    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous" defer></script>
     <script src="js/registro.js" defer></script>
 </body>
-
 </html>

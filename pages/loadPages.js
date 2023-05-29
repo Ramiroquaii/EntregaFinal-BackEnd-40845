@@ -7,5 +7,6 @@ function readHtmlLFile(htmlFile) {
 }
 
 const mainPage = readHtmlLFile('mainPage');
+const adminPage = readHtmlLFile('adminPage');
 
-module.exports = { mainPage };
+module.exports = { mainPage, adminPage };

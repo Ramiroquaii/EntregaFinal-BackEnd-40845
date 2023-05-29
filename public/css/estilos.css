@@ -19,6 +19,9 @@ label {
 .nameTb { min-width: 220px; font-weight: bold; font-style: italic; }
 .priceTd { min-width: 100px;  font-weight: bold; color:crimson; }
 
+#btn-addPrd { height: 35px; width: 35px; margin-left: 45px; margin-right: 15px; text-align: center; font-weight: bold;}
+#btn-delPrd { height: 35px; width: 35px; text-align: center; font-weight: bold;}
+
 
 .chatContent { display: flex; flex-direction: column; }
 .chatLine { display: flex; flex-direction: row; }

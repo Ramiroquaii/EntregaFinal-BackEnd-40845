@@ -1,28 +1,39 @@
-let btnProduct;
+const socket = io();
+
+let btnAdmin;
 let btnMessage;
 let btnLogout;
 let btnQuienSoy;
 
-function eventsAfterLogin(){
-  btnProduct = document.querySelector("#btn-newProduct");
-  btnProduct.addEventListener("click", addNewProduct);
-
+function eventsAfterLogin() {
   btnMessage = document.querySelector("#btn-newMessage");
   btnMessage.addEventListener("click", addNewMessage);
 
   btnLogout = document.querySelector("#btn-logout");
   btnLogout.addEventListener("click", logout);
 
-  btnQuienSoy = document.querySelector("#btn-quienSoy");
-  btnQuienSoy.addEventListener("click", testSession);
+  btnAdmin = document.querySelector("#btn-admin");
+  btnAdmin.addEventListener("click", panelAdmin);
+
+  btnQuienSoy = document.querySelector("#btn-info");
+  btnQuienSoy.addEventListener("click", info);
 }
 
-function testSession(){
-  //window.location.href = '/quiensoy';
-  window.open('/quiensoy', '_blank');
+function insertarAntesDe(elementoExistente, nuevoContenido) {
+  const existingElement = document.getElementById(elementoExistente); // Obtén la referencia al elemento existente
+  existingElement.insertAdjacentHTML('beforebegin', nuevoContenido);  // Inserta el nuevo contenido antes del elemento existente
 }
 
-function getFirstLoadData(){
+
+function info() {
+  var respuesta = confirm('¿ Va a abandonar la sesion para acceder a este contenido ?');
+  if (respuesta) {
+    receivedToken = null;
+    window.location.replace('/info');
+  }
+}
+
+function getFirstLoadData() {
   fetch('/api/productos')
     .then(response => response.json())
     .then(data => {
@@ -33,49 +44,104 @@ function getFirstLoadData(){
         <p class="nameTb">${element.name}</p>
         <p class="priceTd">$ ${element.price}</p>
         <img src="${element.photo}" alt="${element.name}">
+        <button class="btn btn-success" id="btn-addPrd" data-indice="${element._id}">+</button>
+        <button class="btn btn-success" id="btn-delPrd" data-indice="${element._id}">-</button>
         </div>`;
       });
       document.getElementById('productList').innerHTML = `${html}`;
     })
     .catch(error => console.error(error));
-  
+
   fetch('/api/mensajes')
     .then(response => response.json())
-    .then(data =>  {  
+    .then(data => {
       let html = ""; //document.getElementById('chatContent').innerHTML;
       data.forEach(message => {
-      html += `<div class="chatLine" li><p class="user">${message.autor}&nbsp;</p> <p class="time">[ ${message.timestamp} ] :&nbsp;</p> <p class="msg">${message.mensaje}</p></div>`
+        html += `<div class="chatLine" li><p class="user">${message.autor}&nbsp;</p> <p class="time">[ ${message.timestamp} ] :&nbsp;</p> <p class="msg">${message.mensaje}</p></div>`
       });
       document.getElementById('chatContent').innerHTML = `${html}`;
     })
     .catch(error => console.error(error));
 }
 
-function logout(event){
+function logout(event) {
   event.preventDefault();
-  window.location.href = '/logout';
+  receivedToken = null;
+  window.location.href = '/';
 }
 
-function addNewProduct(event) {
-  event.preventDefault();
-  const product = {
-    name: document.getElementById('nombre').value,
-    price: document.getElementById('precio').value,
-    photo: document.getElementById('foto').value
-  };
-  socket.emit('new-product', product);
+// --------- PANEL ADMINISTRADOR --------------------------------------------------------------- //
+
+function eventsAfterAdmin() {
+  btnProduct = document.querySelector("#btn-newProduct");
+  btnProduct.addEventListener("click", addNewProduct);
+
+  btnProduct = document.querySelector("#btn-newProductExit");
+  btnProduct.addEventListener("click", salirPanelAdmin);
 }
 
+function addNewProduct(){
+  alert("ADD PRODUCT BUTTON PRESSED")
+}
+
+function salirPanelAdmin(){
+  alert("SALIR ADMIN BUTTON PRESSED")
+}
+
+async function panelAdmin() {
+  await fetch('/adminPage', {
+    method: 'GET',
+    headers: {
+        'Authorization': `${receivedToken}` // Incluir el token en el encabezado de autorización
+    }
+  })
+    .then(response => {
+        // Manejar la respuesta de la ruta protegida
+        if (response.ok) {
+            // La solicitud se completó con éxito
+            const authHeader = response.headers.get('Authentication');
+            if (authHeader) {
+              receivedToken = authHeader;
+              console.log('Encabezado de autenticación:', authHeader);
+            }
+            return response.json();
+        } else {
+            // La solicitud falló, manejar el error
+            throw new Error('Error en la solicitud de la ruta protegida');
+        }
+    })
+    .then(data => {
+        // Hacer algo con la respuesta de la ruta protegida
+        if(data.hasOwnProperty('estado') && data.estado == 1){
+          alert("Permisos Insuficinetes...\n\nDebe ser administrador !!");
+        } else {
+          insertarAntesDe("productlistPanel", data.page);
+          eventsAfterAdmin();
+        }
+    })
+    .catch(error => {
+        // Manejar el error de la solicitud
+        console.log(error);
+        alert("Error de Solicitud...\n\n Refresque el Navegador e Intente nuevamente !!");
+    });
+}
+
+// --------- PANEL ADMINISTRADOR --------------------------------------------------------------- //
+
+
+// --------- SOCKET.IO --------------------------------------------------------------- //
+
+// ----------- CHAT
 function addNewMessage(event) {
   event.preventDefault();
   const message = {
     autor: document.getElementById('usuario').value,
     mensaje: document.getElementById('mensaje').value
   };
+  document.getElementById('usuario').value = '';
+  document.getElementById('mensaje').value = '';
   socket.emit('new-message', message);
 }
-
-// -------------- CHAT -----------------------------------------
 
 socket.on('messages', data => {
   let html = document.getElementById('chatContent').innerHTML;
@@ -90,55 +156,9 @@ socket.on('messages', data => {
 socket.on('message-added', message => {
   let html = document.getElementById('chatContent').innerHTML;
 
-  html += `<div class="chatLine" li><p class="user">${message.autor}</p> <p class="time">[ ${message.timestamp} ] : </p> <p class="msg">${message.mensaje}</p></div>`;
+  html += `<div class="chatLine" li><p class="user">${message.autor} </p> <p class="time"> [ ${message.timestamp} ] : </p> <p class="msg"> ${message.mensaje}</p></div>`;
 
   document.getElementById('chatContent').innerHTML = `${html}`;
 });
 
-// const sendMessage = (that) => {
-//   const message = {
-//     autor: that.chatUsr.value,
-//     mensaje: that.chatMsg.value
-//   };
-//   socket.emit('new-message', message);
-// };
-
-
-// -------------- PRODUCTOS -----------------------------------------
-
-socket.on('products', data => {
-  let html = document.getElementById('productList').innerHTML;
-
-  data.forEach(element => {
-    html = `${html}
-    <div class="table-line">
-    <p class="nameTb">${element.name}</p>
-    <p class="priceTd">$ ${element.price}</p>
-    <img src="${element.photo}" alt="${element.name}">
-    </div>`;
-  });
-
-  document.getElementById('productList').innerHTML = `${html}`;
-});
-
-socket.on('product-added', message => {
-  let html = document.getElementById('productList').innerHTML;
-
-  html += `<div class="table-line">
-  <p class="nameTb">${message.name}</p>
-  <p class="priceTd">$ ${message.price}</p>
-  <img src="${message.photo}" alt="${message.name}">
-  </div>`;
-  
-  document.getElementById('productList').innerHTML = `${html}`;
-});
-
-// const sendProduct = (that) => {
-//   console.log(that);
-//   const message = {
-//     name: that.name.value,
-//     price: that.price.value,
-//     photo: that.image.value
-//   };
-//   socket.emit('new-product', message);
-// };
+// --------- SOCKET.IO --------------------------------------------------------------- //

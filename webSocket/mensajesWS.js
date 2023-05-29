@@ -1,14 +1,15 @@
-const { getMensajes, saveMensaje } = require('../api/mensajes.js');
+//const { getMensajes, saveMensaje } = require('../api/mensajes.js');
+const { getMessages, saveMessage } = require('../controller/mesageController.js');
 
-async function messageSocket(socket, sockets) {
+async function messageSocket(client, allSockets) {
 
-    socket.on('loadMessages', async productos => {
-        socket.emit('messages', await getMensajes());
+    client.on('loadMessages', async productos => {
+        client.emit('messages', await getMessages());
     });
 
-    socket.on('new-message', async message => {
-        const msgAdded = await saveMensaje(message);
-        sockets.emit('message-added', msgAdded);
+    client.on('new-message', async message => {
+        const msgAdded = await saveMessage(message);
+        allSockets.emit('message-added', msgAdded);
     })
 }
 
