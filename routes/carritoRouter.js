@@ -20,7 +20,7 @@ carritoRouter.get('/api/carrito/user/:id', async (req, res) => {
     res.json(carrito);
 });
 
-carritoRouter.post('/apii/productos', async (req, res) => {
+carritoRouter.post('/api/carrito', async (req, res) => {
     const parametros = req.body;
     const parametrosExistente = {};
     for (const parametro in parametros) {
@@ -28,17 +28,17 @@ carritoRouter.post('/apii/productos', async (req, res) => {
             parametrosExistente[parametro] = parametros[parametro];
         }
     }
-    const addedProduct = await saveCarrito(parametrosExistente);
-    res.json(addedProduct);
+    const addedCarrito = await saveCarrito(parametrosExistente);
+    res.json(addedCarrito);
 });
 
-carritoRouter.delete('/apii/productos/:id', async (req, res) => {
+carritoRouter.delete('/api/carrito/:id', async (req, res) => {
     const { id } = req.params;
     const eliminado = await eliminarCarrito(id);
     res.json(eliminado);
 });
 
-carritoRouter.put('/apii/productos/:id', async (req, res) => {
+carritoRouter.put('/api/carrito/:id', async (req, res) => {
     const { id } = req.params;
     const parametros = req.body;
     const parametrosExistente = {};

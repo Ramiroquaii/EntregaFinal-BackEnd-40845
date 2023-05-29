@@ -2,6 +2,8 @@ const btnLogin = document.querySelector("#btn-login");
 btnLogin.addEventListener("click", loginUser);
 
 let receivedToken = null;
+let logedUser = null;
+let carrito = [];
 
 async function loginUser(event) {
     event.preventDefault();
@@ -22,6 +24,7 @@ async function loginUser(event) {
             .then(data => {
                 if (data.token) {
                     receivedToken = data.token;
+                    logedUser = data.user;
                 } else {
                     alert(data.mensaje);
                 }

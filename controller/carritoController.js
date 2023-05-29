@@ -1,5 +1,16 @@
 const { searchCarrito, insertCarrito, searchCarritoById, searchCarritoByUser, deleteCarrito, updateCarrito } = require('../dao/carritoDao.js');
 
+function getTime() {
+    var currentdate = new Date();
+    var datetime = currentdate.getDate() + "/"
+        + (currentdate.getMonth() + 1) + "/"
+        + currentdate.getFullYear() + " @ "
+        + currentdate.getHours() + ":"
+        + currentdate.getMinutes() + ":"
+        + currentdate.getSeconds();
+    return datetime;
+}
+
 async function getCarritos(){
     const carritos = await searchCarrito();
     let datosActualizados;
@@ -37,8 +48,18 @@ async function getCarritoByUser(usr_id){
     }
 }
 
-async function saveCarrito(){
+async function saveCarrito(carrito){
+    const now = getTime();
+    const newCarrito = { timeStamp: now, ...carrito };
+    
+    const carritoAdded = await insertCarrito(newCarrito);
 
+    if(carritoAdded.acknowledged){
+        let id = carritoAdded.insertedId.toString();
+        return { _id: id, ...newCarrito };
+    } else {
+        return -1;
+    }
 }
 
 async function eliminarCarrito(){

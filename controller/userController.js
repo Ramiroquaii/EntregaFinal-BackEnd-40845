@@ -29,7 +29,7 @@ async function loginUser(usrName, pwd) {
             if (result) {
                 // La contraseña coincide
                 const token = generateToken(payLoad);
-                return { estado: 0, token: token };
+                return { estado: 0, token: token, user: payLoad };
             } else {
                 // La contraseña no coincide
                 return { estado: 1, mensaje: "LogIn Error Contraseña\n\nIntente nuevamente !!" };
@@ -46,12 +46,12 @@ async function loginUser(usrName, pwd) {
 }
 
 async function registerUser(newUsr){
-    const storedUser = await getUser(newUsr.usr);
+    const storedUser = await getUser(newUsr.user);
 
     if (storedUser == null) {
         try {
-            const hash = await bcrypt.hash(newUsr.pwd, 5);
-            let inserted = await addUser({ user: newUsr.usr, passwd: hash, age: newUsr.age, mail: newUsr.mail, phone: newUsr.phone, rol: 0 }); //por defecto el rol es 0 - usuario normal
+            const hash = await bcrypt.hash(newUsr.pass, 5);
+            let inserted = await addUser({ user: newUsr.user, passwd: hash, age: newUsr.age, mail: newUsr.mail, phone: newUsr.phone, rol: 0 }); //por defecto el rol es 0 - usuario normal
             if (inserted.status == 0) { return { estado: 0, mensaje: `USUARIO INSERTADO CON EXITO !!\n\nID: ${inserted.id}` }; }
             if (inserted.status == -1) { return { estado: 1, mensaje: `ERROR AL AGREGAR USUARIO !!\n\nINTENTE NUEVAMENTE` }; }
         } catch (error) {

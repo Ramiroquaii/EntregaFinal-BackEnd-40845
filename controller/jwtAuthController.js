@@ -6,19 +6,6 @@ function generateToken(payLoad) {
     return token;
 }
 
-// async function verifyToken(token) {
-//     jwt.verify(token, jwtPrivateKey, (err, decoded) => {
-//         if (err) {
-//             if (err.name === 'TokenExpiredError') {
-//                 return { estado: 1, mensaje: "Token Expirado" }; //expirado
-//             } else {
-//                 return { estado: 1, mensaje: "Token Invalido" }; //invalido
-//             }
-//         }
-//         return { estado: 0, data: decoded }; //validado
-//     });
-// }
-
 async function verifyToken(token) {
     try {
         const decoded = await jwt.verify(token, jwtPrivateKey);

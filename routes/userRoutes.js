@@ -19,6 +19,7 @@ userRouter.post('/register', async (req, res) => {
             parametrosExistente[parametro] = parametros[parametro];
         }
     }
+
     const response = await registerUser(parametrosExistente);
 
     res.json(response);

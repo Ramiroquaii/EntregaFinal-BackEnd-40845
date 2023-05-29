@@ -78,13 +78,12 @@ async function validateForm(event) {
     })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
-            if(data.estado==0){
+            if(data.estado == 0){
                 alert(data.mensaje);
                 // Redireccionar a una página dentro del mismo sitio web, raiz para volver al login.
                 window.location.href = "/";
             }
-            if(data.estado==1){
+            if(data.estado == 1){
                 alert(data.mensaje);
             }
         }

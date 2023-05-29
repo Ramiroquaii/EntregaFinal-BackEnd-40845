@@ -29,8 +29,21 @@ async function searchCarrito(){
     }
 }
 
-async function insertCarrito(){
-
+async function insertCarrito(carrito){
+    const client = connectAtlas();
+    const databaseAtlas = client.db(mongoDBase);
+    const collectionCarritos = databaseAtlas.collection("carritos");
+    
+    carrito.user = new ObjectId(carrito.user);
+    try {
+        const cursorAtlas = await collectionCarritos.insertOne(carrito); // Retorna objeto resultado con acknowledged:boolean e insertedId:string.
+        return cursorAtlas;
+    } catch (error) {
+        console.log(error);
+        return -1; // Para retornar estado de error durante la consulta se retorna (-1) en numero.
+    } finally {
+        await client.close();
+    }
 }
 
 async function searchCarritoById(id){
