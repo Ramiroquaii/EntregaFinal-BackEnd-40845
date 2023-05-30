@@ -26,10 +26,9 @@ TIEMPO LIMITE 29/05/2023
 - GET /mainPage -> Protegida por JWT
 - GET /adminPage -> Protegida por JWT
 
->>RUTAS DE LA API:
-(de consumo libre sin autenticación, sería conveniente de todos modos incluir al menos todos los métodos PUT, POST, DELETE a la lista de protegidos y dejar solamente los métodos de consulta GET libres al público)
-
-Rutas de acceso para consulta GET, modificación PUT, inserción POST y eliminación DELETE que conforman el CRUD de datos de la aplicación.
+>>RUTAS DE LA API:  
+De consumo libre sin autenticación, sería conveniente de todos modos incluir al menos todos los métodos PUT, POST, DELETE a la lista de protegidos y dejar solamente los métodos de consulta GET libres al público.  
+Rutas de acceso para consulta GET, modificación PUT, inserción POST y eliminación DELETE que conforman el CRUD de datos de la aplicación.  
 
 - GET /api/productos
 - GET /api/productos/:id
