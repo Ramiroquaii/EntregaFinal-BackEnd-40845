@@ -17,6 +17,10 @@ TIEMPO LIMITE 29/05/2023
 **Posibilidad de configurar por comando el puerto de ejecución del servidor:**  
 **node server.js --serverPort 8181 o node server.js -p 8181**  
 
+>>WOKRFLOW A TRAVES DE LA APLICACION:  
+Iniciado en localhost:PORT/ se cargara la vista de login de usuarios.  
+Usuarios existentes en la base de datos MongoAtlas: Ramiro (admin) - Pass: Ramiro1234 / Rafael (comun) - Pass: Rafael1234
+
 >>RUTAS DE LA APLICAICON:
 - GET /registro -> Solicitud de vista de registro para cargar un nuevo usuario.
 - POST /register -> Envío de datos para procesar el registro de un nuevo usuario.
