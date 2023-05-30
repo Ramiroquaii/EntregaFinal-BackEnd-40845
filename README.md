@@ -5,16 +5,17 @@ Coder HouseCurso - Curso BackEnd
 
 *Profesor:* **RAFAEL OCHOA**
 
-*Tutor Personal:* **Anderson Ocaña** (Hasta Finalizar el Curso)
-                  **Estanislao Valdez** (hasta el 21/03/2023)
-                  **Michel Douglas Ezequiel Chamarez Richards** (hasta el 02/01/2023)
+*Tutor Personal:*
+ **Anderson Ocaña** (Hasta Finalizar el Curso)  
+ **Estanislao Valdez** (hasta el 21/03/2023)  
+ **Michel Douglas Ezequiel Chamarez Richards** (hasta el 02/01/2023)
 
 # ENTREGA PROYECTO FINAL
 TIEMPO LIMITE 29/05/2023
 
-**Para ejecutar comando: node server.js**;
-**Posibilidad de configurar por comando el puerto de ejecución del servidor:**;
-**node server.js --serverPort 8181 o node server.js -p 8181**;
+**Para ejecutar comando: node server.js**
+**Posibilidad de configurar por comando el puerto de ejecución del servidor:**
+**node server.js --serverPort 8181 o node server.js -p 8181**
 
 >>RUTAS DE LA APLICAICON:
 - GET /registro -> Solicitud de vista de registro para cargar un nuevo usuario.
