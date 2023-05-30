@@ -14,4 +14,33 @@ TIEMPO LIMITE 29/05/2023
 
 **Para ejecutar comando: node server.js**
 
-Se completara el README hoy Martes 30/5/2023 durante el día...
+>>RUTAS DE LA APLICAICON:
+GET /registro -> Solicitud de vista de registro para cargar un nuevo usuario.
+POST /register -> Envío de datos para procesar el registro de un nuevo usuario.
+GET /info -> Vista de información con PLANTILLAS.
+
+POST /login -> Generación del JWT ante validación exitosa.
+GET /mainPage -> Protegida por JWT
+GET /adminPage -> Protegida por JWT
+
+>>RUTAS DE LA API:
+(de consumo libre sin autenticación, sería conveniente de todos modos incluir al menos todos los métodos PUT, POST, DELETE a la lista de protegidos y dejar solamente los métodos de consulta GET libres al público)
+
+Rutas de acceso para consulta GET, modificación PUT, inserción POST y eliminación DELETE que conforman el CRUD de datos de la aplicación.
+
+GET /api/productos
+GET /api/productos/:id
+POST /api/productos
+DELETE /api/productos/:id
+PUT /api/productos/:id
+
+GET /api/mensajes
+GET /api/mensajes/:msgAutor
+POST /api/mensajes
+
+GET /api/carritos
+GET /api/carrito/:id
+GET /api/carrito/user/:id
+POST /api/carrito
+DELETE /api/carrito/:id
+PUT /api/carrito/:id
