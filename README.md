@@ -20,7 +20,7 @@ TIEMPO LIMITE 29/05/2023
 >>WOKRFLOW A TRAVES DE LA APLICACION:  
 Iniciado en localhost:PORT/ se cargara la vista de login de usuarios.  
 Usuarios existentes en la base de datos MongoAtlas: Ramiro (admin) - Pass: Ramiro1234 / Rafael (comun) - Pass: Rafael1234  
-Se cargara la vista principal donde se saluda, se presentan los 4 botones de acciones SALIR - CARRITO - ADMINISTRAR - INFORMACION  
+Se cargara la vista principal, se presentan 4 botones de acciones SALIR - CARRITO - ADMINISTRAR - INFORMACION  
 - SALIR vuelve al login cierra la app.  
 - CARRITO simplemente muestyra el vector que contiene {Producto:_id, cantidad: x} para cada producto agregado, no se desarrollo vista o contenido adicional simplemente se visualiza en formato de texto.  
 - ADMINISTRAR si se tiene el permiso de administrador se carla el panel de alta de productos (esta el CRUD pero no esta conectado al front end solo opera por ruta o postman).  
