@@ -16,7 +16,7 @@ TIEMPO LIMITE 29/05/2023
 **Para ejecutar comando: node server.js**  
 **Posibilidad de configurar por comando el puerto de ejecución del servidor:**  
 **node server.js --serverPort 8181 o node server.js -p 8181**  
-<font color="red">Este es un párrafo resaltado en rojo.</font>
+
 >>RUTAS DE LA APLICAICON:
 - GET /registro -> Solicitud de vista de registro para cargar un nuevo usuario.
 - POST /register -> Envío de datos para procesar el registro de un nuevo usuario.
