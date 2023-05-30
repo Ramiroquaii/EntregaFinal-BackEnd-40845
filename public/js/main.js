@@ -178,11 +178,7 @@ function verCarrito(){
   }).then(async (result) => {
     if (result.isConfirmed) {
       // Acción a realizar si el usuario confirma
-      let result = await saveCarrito();
-      console.log(`Info de evaluacion: ${result}`);
-      if(result.hasOwnProperty('_id')){
-        Swal.fire('¡Confirmado!', `La acción se ha realizado\nID Carrito: ${result._id}`, 'success');
-      }else{ Swal.fire('Error al Salvar', 'Vuelva a intentar nuevamente.', 'error'); }
+      saveCarrito();
     } else {
       // Acción a realizar si el usuario cancela
       Swal.fire('Cancelado', 'La acción ha sido cancelada.', 'error');
@@ -202,7 +198,7 @@ async function saveCarrito(){
       method: 'POST',
       headers: { 'Authorization': `${receivedToken}`, 'Content-Type': 'application/json' },
       body: JSON.stringify(newCarrito)
-  })
+    })
       .then(response => {
           // Manejar la respuesta de la ruta protegida
           if (response.ok) {
@@ -214,16 +210,17 @@ async function saveCarrito(){
           }
       })
       .then(data => {
-          // Hacer algo con la respuesta de la ruta protegida
           if(data == -1){
-            return false;
+            Swal.fire('Error al Salvar', 'Vuelva a intentar nuevamente.', 'error');
           } else {
-            return JSON.parse(data);
+            Swal.fire('¡Confirmado!', `Carrito Guardado con éxito !!`, 'success');
           }
       })
       .catch(error => {
-          return false;
+        Swal.fire('Error al Salvar', 'Vuelva a intentar nuevamente.', 'error');
       });
+  } else {
+    Swal.fire('Carrito Vacio', 'Inserte Productos !!', 'error');
   }
 }
 

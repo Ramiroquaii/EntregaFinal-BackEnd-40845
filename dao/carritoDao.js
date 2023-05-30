@@ -83,11 +83,9 @@ async function searchCarritoByUser(user_id){
 }
 
 async function deleteCarrito(){
-
 }
 
 async function updateCarrito(){
-
 }
 
 module.exports = { searchCarrito, insertCarrito, searchCarritoById, searchCarritoByUser, deleteCarrito, updateCarrito }

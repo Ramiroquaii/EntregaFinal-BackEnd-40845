@@ -63,4 +63,3 @@ async function registerUser(newUsr){
 }
 
 module.exports = { loginUser, registerUser };
-

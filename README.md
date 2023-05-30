@@ -12,8 +12,6 @@ Coder HouseCurso - Curso BackEnd
 # ENTREGA PROYECTO FINAL
 TIEMPO LIMITE 29/05/2023
 
-**Para ejecutar comando: deno run server.ts**
+**Para ejecutar comando: node server.js**
 
->>Seccion
-
-- enumeracion
+Se completara el README hoy Martes 30/5/2023 durante el día...

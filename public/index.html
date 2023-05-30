@@ -12,33 +12,31 @@
 </head>
 
 <body>
+    <div id="mainHTML">
+        <div class="container mt-3">
+            <div class="jumbotron">
+                <h1>Login de Usuario</h1>
+                <br>
+                <form>
+                    <div class="form-group">
+                        <label for="user">Ingrese su Nombre</label>
+                        <input id="user" class="form-control" type="text" name="user" required>
 
-<div id="mainHTML">
-    <div class="container mt-3">
-        <div class="jumbotron">
-            <h1>Login de Usuario</h1>
-            <br>
-            <form>
-                <div class="form-group">
-                    <label for="user">Ingrese su Nombre</label>
-                    <input id="user" class="form-control" type="text" name="user" required>
+                        <label for="user">Contraseña</label>
+                        <input id="pass" class="form-control" type="password" name="pass" required>
 
-                    <label for="user">Contraseña</label>
-                    <input id="pass" class="form-control" type="password" name="pass" required>
-
-                    <button class="btn btn-success mt-3" id="btn-login" type="submit">Ingresar</button>
-                </div>
-            </form>
-            <br>
-            <a href="/registro">No tiene cuenta ? - Regístrate</a>
+                        <button class="btn btn-success mt-3" id="btn-login" type="submit">Ingresar</button>
+                    </div>
+                </form>
+                <br>
+                <a href="/registro">No tiene cuenta ? - Regístrate</a>
+            </div>
         </div>
     </div>
-</div>
 
     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous" defer></script>
     <script src="js/login.js" defer></script>
     <script src="js/main.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.all.min.js"></script>
 </body>
-
 </html>

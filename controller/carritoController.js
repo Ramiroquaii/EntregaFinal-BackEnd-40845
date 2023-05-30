@@ -63,11 +63,9 @@ async function saveCarrito(carrito){
 }
 
 async function eliminarCarrito(){
-
 }
 
 async function actualizarCarrito(){
-
 }
 
 module.exports = { getCarritos, getCarritoById, getCarritoByUser, saveCarrito, eliminarCarrito, actualizarCarrito };
